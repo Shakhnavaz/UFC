@@ -1,43 +1,44 @@
 import random
 
 def create_fighter():
-	person = {"сила": 100, "выносливость": 1000}
-	person["имя"] = input("Введите имя: ")
-	choose = input("1 - прирост к силе,  \
-		2 - прирост к выносливости ")
+	person = {"сила": 100, "жизни бойца": 1000, "ловкость": 700}
+	person["имя"] = input("Введи имя своего бойца: ")
+	print("Распредели очки своему бойцу: ")
+	choose = input("1 - сила, 2 - жизни бойца, 3 - ловкость" + "Вводи характеристику: ")
 	if choose == "1":
 		person["сила"] += 40
-	else:
-		person["выносливость"] += 400
+	elif choose == "2":
+		person["жизни бойца"] += 400
+	else choose == "3":
+		person["ловкость"] = random.randint(1, 100)
+		if person["ловкость"] in range(1, 20):
+			print("уклон")
 	return person
 
 def health(player):
-	print("У игрока", player["имя"], "осталось",
-		player["выносливость"], "выносливости" )
+	print("У бойца", player["имя"], "осталось", 
+		player["жизни бойца"], "жизней")
 
 def attack(attacker, defender):
-	damage = random.randint(attacker["сила"] - 100,
+	damage = random.randint(attacker["сила"] - 30,
 		attacker["сила"] + 30)
-	print("Игрок", attacker["имя"], "нанес",
+	print("Боец", attacker["имя"], "нанес", 
 		damage, "урона")
-	defender["выносливость"] -= damage
-
+	defender["жизни бойца"] -= damage
 
 person1 = create_fighter()
 person2 = create_fighter()
 
-attack(person1,person2)
-attack(person2,person1)
-
 while True:
-	health(person1)
-	health(person2)
 	attack(person1, person2)
 	attack(person2, person1)
+	health(person1)
+	health(person2)
 	input()
-	if person1["выносливость"] <= 0:
+
+	if person1["жизни бойца"] <= 0:
 		print(person1["имя"], "проиграл")
 		break
-	if person1["выносливость"] <= 0:
-		print(person1["имя"], "проиграл")
+	if person2["жизни бойца"] <= 0:
+		print(person2["имя"], "проиграл")
 		break
